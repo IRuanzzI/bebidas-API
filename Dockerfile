@@ -8,7 +8,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN mvn package -DskipTests
+RUN mvn clean install
 
 FROM openjdk:17-jdk-slim
 
