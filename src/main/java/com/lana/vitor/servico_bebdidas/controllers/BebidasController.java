@@ -19,10 +19,9 @@ public class BebidasController {
 
     @PostMapping("/create")
     ResponseEntity<BebidasResponseDTO> create (@RequestBody BebidasDTO dto){
-
-        var respose = service.create(dto);
-        var URI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(respose.id()).toUri();
-        return ResponseEntity.created(URI).body(respose);
+        var response = service.create(dto);
+        var URI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(response.id()).toUri();
+        return ResponseEntity.created(URI).body(response);
     }
 
     @GetMapping("/findAll")
@@ -33,7 +32,7 @@ public class BebidasController {
 
     @PostMapping("/sell")
     ResponseEntity<Status> sell(@RequestBody SellDTO dto){
-         service.sell(dto);
+        service.sell(dto);
         return ResponseEntity.ok().build();
     }
 
@@ -43,4 +42,14 @@ public class BebidasController {
         return ResponseEntity.ok().build();
     }
 
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<?> delete(@PathVariable Long id) {
+        try {
+            service.delete(id);
+            return ResponseEntity.ok().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
+    }
 }
