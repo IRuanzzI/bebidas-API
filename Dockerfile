@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y \
     openjdk-17-jdk \
     maven
 
-Set the working directory
+    
 WORKDIR /app
 
 COPY . .
