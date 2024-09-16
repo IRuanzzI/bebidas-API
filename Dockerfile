@@ -7,7 +7,7 @@ WORKDIR /app
 COPY . .
 
 # Executa o Maven para construir o projeto e gerar o .jar
-RUN mvn clean install -DskipTests
+RUN mvn package -DskipTests
 
 # Etapa de execução do container utilizando uma imagem mais leve
 FROM openjdk:17-jdk-slim
