@@ -1,21 +1,22 @@
 FROM ubuntu:latest AS build
 
-RUN apt-get update && apt-get install -y \
-    openjdk-17-jdk \
-    maven
+RUN apt-get update
 
-WORKDIR /app
+RUN apt-get install openjdk-17-jdk -y
 
 COPY . .
 
-RUN mvn clean install -DskipTests
+RUN apt-get install maven -y
+RUN mvn clean install
+
+WORKDIR /app
+
 
 FROM openjdk:17-jdk-slim
 
 EXPOSE 8080
 
-COPY --from=build /app/target/servico-bebdidas-0.0.1-SNAPSHOT.jar /app/app.jar
+COPY --from=build /target/servico-bebdidas-0.0.1-SNAPSHOT.jar app.jar
 
-WORKDIR /app
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
